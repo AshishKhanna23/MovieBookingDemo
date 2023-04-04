@@ -1,17 +1,12 @@
 package com.ashish.MovieBooking.controllers;
 
 import com.ashish.MovieBooking.dtos.MovieDto;
-import com.ashish.MovieBooking.entities.Movie;
 import com.ashish.MovieBooking.exceptions.MovieDetailsNotFoundException;
 import com.ashish.MovieBooking.services.MovieService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -66,6 +61,13 @@ public class MovieController {
         movieService.deleteMovie(id);
         return new ResponseEntity<>("DELETED", HttpStatus.OK);
     }
+
+    @PostMapping(value = "/delete/{movie_id}")
+    public ResponseEntity deleteMoviee(@RequestBody MovieDto movieDto, @PathVariable(name = "movie_id") int id) throws MovieDetailsNotFoundException {
+        movieService.deleteMovieNot(id);
+        return new ResponseEntity("Employee with given ID is deleted !", HttpStatus.OK);
+    }
+
 
 
 

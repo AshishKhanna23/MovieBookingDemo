@@ -6,7 +6,7 @@ import java.util.Set;
 import javax.persistence.*;
 
 @Entity
-@Table(name="User_Table")
+@Table(name="`user_table`")
 public class User {
 
     @Id
@@ -32,10 +32,10 @@ public class User {
     @JsonBackReference
     private Set<Booking> bookings;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_contact_number", joinColumns = @JoinColumn(name = "user_id"))
-    @Column(name = "mobile_number", nullable = false)
-    private Set<Integer> phoneNumbers;
+//    @ElementCollection(fetch = FetchType.EAGER)
+//    @CollectionTable(name = "user_contact_number", joinColumns = @JoinColumn(name = "user_id"))
+//    @Column(name = "mobile_number", nullable = false)
+//    private Set<Integer> phoneNumbers;
 
     @ManyToOne
     @JoinColumn(name = "user_type", nullable = false)
@@ -45,13 +45,13 @@ public class User {
     @JoinColumn(name = "language_id", nullable = false)
     private Language language;
 
-    public Set<Integer> getPhoneNumbers() {
-        return phoneNumbers;
-    }
+//    public Set<Integer> getPhoneNumbers() {
+//        return phoneNumbers;
+//    }
 
-    public void setPhoneNumbers(Set<Integer> phoneNumbers) {
-        this.phoneNumbers = phoneNumbers;
-    }
+//    public void setPhoneNumbers(Set<Integer> phoneNumbers) {
+//        this.phoneNumbers = phoneNumbers;
+//    }
 
     public UserType getUserType() {
         return userType;

@@ -15,7 +15,7 @@ public class MovieBookingApplication {
 	public static void main(String[] args) {
 		ApplicationContext ctx = SpringApplication.run(MovieBookingApplication.class, args);
 
-		System.out.println("Hello Spring Boot !!!!");
+		System.out.println("\nHello Spring Boot !!!!");
 
 	}
 	@Bean

@@ -1,11 +1,12 @@
 package com.ashish.MovieBooking.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import lombok.Data;
 
+import javax.persistence.*;
+
+@Data
 @Entity
+@Table(name = "`status`")
 public class Status {
 
     @Id
@@ -15,31 +16,11 @@ public class Status {
     @Column(length = 20, nullable = false, unique = true)
     private String statusName;
 
-    public Status() {
-    }
-
     public Status( String statusName) {
         this.statusName = statusName;
     }
 
-    public int getStatusId() {
-        return statusId;
-    }
+    public Status() {
 
-    public void setStatusId(int statusId) {
-        this.statusId = statusId;
-    }
-
-    public String getStatusName() {
-        return statusName;
-    }
-
-    public void setStatusName(String statusName) {
-        this.statusName = statusName;
-    }
-
-    @Override
-    public String toString() {
-        return "Status{" + "statusId=" + statusId + ", statusName='" + statusName + '\'' + '}';
     }
 }

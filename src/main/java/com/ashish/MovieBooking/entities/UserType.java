@@ -1,11 +1,9 @@
 package com.ashish.MovieBooking.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "`user_type`")
 public class UserType {
     @Id
     @GeneratedValue

@@ -70,9 +70,9 @@ public class UserServiceImpl implements UserService {
             savedUser.setDateOfBirth(user.getDateOfBirth());
         }
 
-        if (isNotNullOrZero(user.getPhoneNumbers())) {
-            savedUser.setPhoneNumbers(user.getPhoneNumbers());
-        }
+//        if (isNotNullOrZero(user.getPhoneNumbers())) {
+//            savedUser.setPhoneNumbers(user.getPhoneNumbers());
+//        }
 
         if (isNotNullOrZero(user.getUserType())) {
             savedUser.setUserType(user.getUserType());

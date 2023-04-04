@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
+import com.ashish.MovieBooking.converters.MovieConverter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,22 +25,24 @@ public class MovieServiceImpl implements MovieService {
     @Autowired
     private ModelMapper modelMapper;
 
-    @Override
-    public MovieDto acceptMovieDetails(MovieDto movieDto) {
-        Movie movie = modelMapper.map(movieDto, Movie.class);
-        Movie saved_movie = movieDao.save(movie);
+    @Autowired
+    MovieConverter movieConverter;
 
-        return modelMapper.map(saved_movie, MovieDto.class);
+
+    @Override
+    public List<MovieDto> getAllMovieDetails() {
+        List<MovieDto> movieDtos= new ArrayList<>();
+        List<Movie> movies= movieDao.findAll();
+        for (Movie movie : movies){
+            movieDtos.add(movieConverter.ConvertToMovieDto(movie));
+        }
+        return movieDtos;
     }
 
     @Override
     public MovieDto getMovieDetails(int id) throws MovieDetailsNotFoundException {
         Movie movie= movieDao.findById(id).orElseThrow(()-> new MovieDetailsNotFoundException("Movie not found"));
-
-
-        //convert movie object to movieDto Object
-        MovieDto movieDto= convertToMovieDto(movie);
-        return movieDto;
+        return movieConverter.ConvertToMovieDto(movie);
     }
 
     @Override
@@ -62,8 +64,7 @@ public class MovieServiceImpl implements MovieService {
             savedMovie.setReleaseDate(movie.getReleaseDate());
         }
         Movie saved_movie = movieDao.save(savedMovie);
-
-        return modelMapper.map(saved_movie, MovieDto.class);
+        return movieConverter.ConvertToMovieDto(saved_movie);
 
     }
 
@@ -72,28 +73,29 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public boolean deleteMovie(int id) throws MovieDetailsNotFoundException {
-        MovieDto savedMovie= getMovieDetails(id);
-        movieDao.delete(modelMapper.map(savedMovie, Movie.class));
-        return true;
+    public MovieDto acceptMovieDetails(MovieDto movieDto) {
+        Movie movie = movieConverter.ConvertToMovie(movieDto);
+        Movie saved_movie = movieDao.save(movie);
+        return movieConverter.ConvertToMovieDto(saved_movie);
     }
 
     @Override
-    public List<MovieDto> getAllMovieDetails() {
-        List<MovieDto> movieDtos= new ArrayList<>();
-        try {
-            List<Movie> movies = movieDao.findAll();
-            for (Movie movie : movies){
-                movieDtos.add(convertToMovieDto(movie));
-            }
-        } catch (Exception e) {
-
-        }
-        return movieDtos;
+    public boolean deleteMovie(int id) throws MovieDetailsNotFoundException {
+        MovieDto savedMovie= getMovieDetails(id);
+        movieDao.delete(movieConverter.ConvertToMovie(savedMovie));
+        return true;
     }
 
-    private MovieDto convertToMovieDto(Movie movie){
-        MovieDto movieDto= modelMapper.map(movie,MovieDto.class);
-        return movieDto;
+
+    @Override
+    public boolean deleteMovieNot(int id) throws MovieDetailsNotFoundException {
+        Movie movie= movieDao.findById(id).orElseThrow(()-> new MovieDetailsNotFoundException("Movie not found"));
+        movie.setActive(false);
+        movieDao.save(movie);
+        return true;
+
+
     }
+
+
 }

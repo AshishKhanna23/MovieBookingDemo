@@ -25,5 +25,8 @@ public interface MovieService {
     // Get the List of all the movies present
     public List<MovieDto> getAllMovieDetails();
 
+    // Deleting a movie from User end but keeping in the DB
+    public boolean deleteMovieNot(int id) throws MovieDetailsNotFoundException;
+
 
 }

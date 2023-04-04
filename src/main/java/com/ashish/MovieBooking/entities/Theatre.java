@@ -1,14 +1,11 @@
 package com.ashish.MovieBooking.entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+
+import javax.persistence.*;
 
 @Entity
+@Table(name = "`theatre`")
 public class Theatre {
 
     @Id
